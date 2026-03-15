@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://ct1t00kos4718"]
+[gd_scene load_steps=15 format=4 uid="uid://ct1t00kos4718"]
 
 [ext_resource type="Script" uid="uid://cwo1jc870vltd" path="res://Levels/level.gd" id="1_rfktq"]
 [ext_resource type="Script" uid="uid://bcfey5v5h1sj5" path="res://debug.gd" id="2_0urlm"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cuhbagbyqivne" path="res://ball.tscn" id="4_xoyoh"]
 [ext_resource type="Texture2D" uid="uid://bplejlj4xleiq" path="res://tileset.png" id="5_f4pg2"]
 [ext_resource type="PackedScene" uid="uid://3ljdsbr36whq" path="res://goal.tscn" id="6_62b6n"]
+[ext_resource type="PackedScene" uid="uid://dklmgavyp4got" path="res://Levels/finger.tscn" id="7_0urlm"]
 
 [sub_resource type="SystemFont" id="SystemFont_ryrav"]
 font_names = PackedStringArray("PT Sans")
@@ -104,3 +105,5 @@ tile_set = SubResource("TileSet_80nbo")
 
 [node name="Goal" parent="." instance=ExtResource("6_62b6n")]
 position = Vector2(355, -49)
+
+[node name="Finger" parent="." instance=ExtResource("7_0urlm")]

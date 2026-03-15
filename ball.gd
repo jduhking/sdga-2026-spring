@@ -27,7 +27,7 @@ func _physics_process(delta: float) -> void:
 		_handle_physics_state(delta)
 
 func _handle_picked_state() -> void:
-	if Input.is_action_just_pressed("mouse"):
+	if Input.is_action_just_pressed("right_click"):
 		picked = false
 	else:
 		var target = get_global_mouse_position()

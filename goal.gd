@@ -34,7 +34,5 @@ func _physics_process(delta: float) -> void:
 		progress = perc
 		progress_bar.value = perc
 	
-	
-	
 func _on_progress_updated(value : float):
 	progress_bar.value = value
