@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://dsjyjmkxs8qfs"]
+
+[ext_resource type="Script" uid="uid://jx2kokgwoos1" path="res://Managers/ui_manager.gd" id="1_p428f"]
+[ext_resource type="Script" uid="uid://bcfey5v5h1sj5" path="res://debug.gd" id="2_hinit"]
+
+[sub_resource type="SystemFont" id="SystemFont_we10i"]
+font_names = PackedStringArray("PT Sans")
+
+[sub_resource type="SystemFont" id="SystemFont_eow3j"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_cfhxq"]
+font = SubResource("SystemFont_eow3j")
+
+[node name="UIManager" type="Node"]
+script = ExtResource("1_p428f")
+
+[node name="Debug" type="CanvasLayer" parent="."]
+script = ExtResource("2_hinit")
+debug_font = SubResource("SystemFont_we10i")
+
+[node name="Velocity" type="Label" parent="Debug"]
+offset_left = 162.0
+offset_top = 2.0
+offset_right = 202.0
+offset_bottom = 25.0
+text = "vel:"
+label_settings = SubResource("LabelSettings_cfhxq")
+
+[node name="FlickStrength" type="Label" parent="Debug"]
+offset_left = 4.0
+offset_top = 3.0
+offset_right = 44.0
+offset_bottom = 26.0
+text = "flick:"

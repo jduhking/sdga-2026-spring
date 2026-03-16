@@ -4,6 +4,7 @@ var tilemap : TileMapLayer
 var cam : MainCamera
 var ball : Ball
 var goal : Goal
+var finger : Finger
 var current_level : Level
 
 
