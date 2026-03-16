@@ -23,7 +23,8 @@ func change_state(new_state : STATE):
 			pass
 		STATE.RELEASED:
 			sprite.frame = 1
-			GameManager.ball.velocity.x += max_flick_strength * dir_to_ball
+			GameManager.cam.follow_node = GameManager.ball
+			GameManager.ball.velocity.x += flick_strength * dir_to_ball
 
 
 func update_state(delta):
@@ -47,6 +48,7 @@ func update_state(delta):
 			
 func _ready():
 	GameManager.finger = self
+	GameManager.cam.follow_node = self
 
 func _process(delta: float) -> void:
 	dir_to_ball = sign(GameManager.ball.global_position.x - global_position.x) 

@@ -4,3 +4,4 @@
 
 [node name="GameManager" type="Node"]
 script = ExtResource("1_70yv6")
+DEBUG_ON = true

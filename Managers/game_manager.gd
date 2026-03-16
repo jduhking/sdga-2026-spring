@@ -6,6 +6,8 @@ var ball : Ball
 var goal : Goal
 var finger : Finger
 var current_level : Level
+@export var DEBUG_ON : bool = false
+
 
 
 const LEVELS = [
@@ -38,7 +40,10 @@ func _on_level_complete():
 func update_state(delta):
 	match game_state:
 		GAMESTATE.GAME:
-			pass
+			if Input.is_action_just_pressed("restart"):
+				restart_level()
+			if Input.is_action_just_pressed("slow") and DEBUG_ON:
+				Engine.time_scale = 0.1 if Engine.time_scale == 1 else 1
 			
 func load_level(index: int) -> void:
 	current_level_index = clampi(index, 0, LEVELS.size() - 1)
