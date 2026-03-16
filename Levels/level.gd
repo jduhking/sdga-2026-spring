@@ -8,6 +8,7 @@ extends Node2D
 
 func _ready() -> void:
 	GameManager.tilemap = $TileMapLayer
+	GameManager.current_level = self
 	GameManager.change_state(GameManager.GAMESTATE.GAME)
 	GameManager.cam.min_x = min_x
 	GameManager.cam.max_x = max_x

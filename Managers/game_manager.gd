@@ -28,13 +28,12 @@ func change_state(new_state : GAMESTATE):
 		GAMESTATE.GAME:
 			goal.progress_complete.connect(_on_level_complete)
 		GAMESTATE.GAMEOVER:
-			pass
+			restart_level()
 
 func _process(delta: float) -> void:
 	update_state(delta)
 	
 func _on_level_complete():
-	print("level complete")
 	restart_level()
 			
 func update_state(delta):
@@ -44,7 +43,8 @@ func update_state(delta):
 				restart_level()
 			if Input.is_action_just_pressed("slow") and DEBUG_ON:
 				Engine.time_scale = 0.1 if Engine.time_scale == 1 else 1
-			
+			if current_level and ball.global_position.y > current_level.max_y + 32:
+				change_state(GAMESTATE.GAMEOVER)
 func load_level(index: int) -> void:
 	current_level_index = clampi(index, 0, LEVELS.size() - 1)
 	get_tree().change_scene_to_file(LEVELS[current_level_index])
