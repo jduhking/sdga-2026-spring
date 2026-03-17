@@ -34,7 +34,7 @@ func _process(delta: float) -> void:
 	update_state(delta)
 	
 func _on_level_complete():
-	restart_level()
+	next_level()
 			
 func update_state(delta):
 	match game_state:

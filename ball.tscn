@@ -9,15 +9,22 @@ radius = 8.0
 [node name="Ball" type="CharacterBody2D"]
 z_index = 1
 collision_layer = 2
+collision_priority = 64.0
 floor_stop_on_slope = false
+floor_constant_speed = true
 floor_block_on_wall = false
 floor_max_angle = 3.1415927
 floor_snap_length = 8.0
+safe_margin = 0.001
 script = ExtResource("1_41u45")
-gravity = 960.0
+friction = 110.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_ktgx5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_80nbo")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(43, 0)
+collision_mask = 0

@@ -51,6 +51,12 @@ slow={
 ]
 }
 
+[physics]
+
+2d/solver/solver_iterations=4
+2d/solver/contact_recycle_radius=0.5
+2d/solver/contact_max_separation=2.0
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

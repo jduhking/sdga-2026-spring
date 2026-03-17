@@ -5,6 +5,7 @@
 
 [node name="Finger" type="Node2D"]
 script = ExtResource("1_n845d")
+max_flick_strength = 900.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_k4dm0")
@@ -12,7 +13,6 @@ offset = Vector2(-1, -7)
 hframes = 2
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
-anchors_preset = -1
 offset_left = -15.0
 offset_top = -21.0
 offset_right = 17.0
