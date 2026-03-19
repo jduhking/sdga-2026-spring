@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3dlinusws3yn"]
+
+[ext_resource type="Script" uid="uid://cpr7qfyu8axsy" path="res://cam.gd" id="1_vbit3"]
+
+[node name="MainCamera" type="Camera2D"]
+position_smoothing_enabled = true
+position_smoothing_speed = 4.0
+script = ExtResource("1_vbit3")

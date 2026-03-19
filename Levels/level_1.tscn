@@ -1,92 +1,41 @@
-[gd_scene load_steps=9 format=4 uid="uid://ct1t00kos4718"]
+[gd_scene load_steps=7 format=4 uid="uid://bjti66tpvp0hx"]
 
 [ext_resource type="Script" uid="uid://cwo1jc870vltd" path="res://Levels/level.gd" id="1_rfktq"]
-[ext_resource type="Script" uid="uid://cpr7qfyu8axsy" path="res://cam.gd" id="3_77x7w"]
+[ext_resource type="PackedScene" uid="uid://d3dlinusws3yn" path="res://main_camera.tscn" id="2_rfktq"]
+[ext_resource type="TileSet" uid="uid://bf6vw8tvwjwpa" path="res://tileset.tres" id="4_rfktq"]
 [ext_resource type="PackedScene" uid="uid://cuhbagbyqivne" path="res://ball.tscn" id="4_xoyoh"]
-[ext_resource type="Texture2D" uid="uid://bplejlj4xleiq" path="res://tileset.png" id="5_f4pg2"]
 [ext_resource type="PackedScene" uid="uid://3ljdsbr36whq" path="res://goal.tscn" id="6_62b6n"]
 [ext_resource type="PackedScene" uid="uid://dklmgavyp4got" path="res://Levels/finger.tscn" id="7_0urlm"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_feb5d"]
-texture = ExtResource("5_f4pg2")
-3:3/0 = 0
-3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, 0.5, 8, 8, -8, 8)
-4:3/0 = 0
-4:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 0.5, 8, -8, 8, 8, -8, 8)
-5:3/0 = 0
-5:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, 0.5, 8, 8, -8, 8)
-6:3/0 = 0
-6:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 0.5, 8, 8, -8, 8)
-3:4/0 = 0
-3:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -0.5)
-4:4/0 = 0
-4:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, -0.5)
-5:4/0 = 0
-5:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -0.5, -8, 8)
-6:4/0 = 0
-6:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, -8, -0.5)
-5:6/0 = 0
-5:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
-6:6/0 = 0
-6:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
-7:6/0 = 0
-7:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
-8:6/0 = 0
-8:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, -8, 8, 8, -8, 8)
-9:6/0 = 0
-9:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, 8, -8, 8)
-5:7/0 = 0
-5:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
-6:7/0 = 0
-6:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
-7:7/0 = 0
-7:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
-8:7/0 = 0
-8:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8)
-9:7/0 = 0
-9:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, -8, 8)
-5:8/0 = 0
-5:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
-6:8/0 = 0
-6:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
-7:8/0 = 0
-7:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
-
-[sub_resource type="TileSet" id="TileSet_80nbo"]
-resource_local_to_scene = true
-physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_feb5d")
 
 [node name="Level1" type="Node2D"]
 script = ExtResource("1_rfktq")
 
-[node name="MainCamera" type="Camera2D" parent="."]
-position = Vector2(190, -113)
-script = ExtResource("3_77x7w")
+[node name="MainCamera" parent="." instance=ExtResource("2_rfktq")]
+position = Vector2(0, 47)
 
 [node name="Ball" parent="." instance=ExtResource("4_xoyoh")]
-position = Vector2(-52, 119)
+position = Vector2(-2, 54)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAD6/wgAAAAHAAcAAAD6/wkAAAAGAAYAAAD6/woAAAAGAAYAAAD6/wsAAAAGAAYAAAD7/wgAAAAHAAcAAAD7/wkAAAAGAAYAAAD7/woAAAAGAAYAAAD7/wsAAAAGAAYAAAD8/wgAAAAHAAcAAAD8/wkAAAAGAAYAAAD8/woAAAAGAAYAAAD8/wsAAAAGAAYAAAD9/wgAAAAGAAYAAAD9/wkAAAAGAAYAAAD9/woAAAAGAAYAAAD9/wsAAAAGAAYAAAD+/wgAAAAGAAYAAAD+/wkAAAAGAAYAAAD+/woAAAAGAAYAAAD+/wsAAAAGAAYAAAD//wgAAAAGAAYAAAD//wkAAAAGAAYAAAD//woAAAAGAAYAAAD//wsAAAAGAAYAAAAAAAgAAAAGAAYAAAAAAAkAAAAGAAYAAAAAAAoAAAAGAAYAAAAAAAsAAAAGAAYAAAABAAgAAAAGAAYAAAABAAkAAAAGAAYAAAABAAoAAAAGAAYAAAABAAsAAAAGAAYAAAACAAgAAAAGAAYAAAACAAkAAAAGAAYAAAACAAoAAAAGAAYAAAACAAsAAAAGAAYAAAADAAgAAAAGAAYAAAADAAkAAAAGAAYAAAADAAoAAAAGAAYAAAADAAsAAAAGAAYAAAAEAAgAAAAGAAYAAAAEAAkAAAAGAAYAAAAEAAoAAAAGAAYAAAAEAAsAAAAGAAYAAAAFAAgAAAAGAAYAAAAFAAkAAAAGAAYAAAAFAAoAAAAGAAYAAAAFAAsAAAAGAAYAAAAGAAgAAAAGAAYAAAAGAAkAAAAGAAYAAAAGAAoAAAAGAAYAAAAGAAsAAAAGAAYAAAAHAAgAAAAGAAYAAAAHAAkAAAAGAAYAAAAHAAoAAAAGAAYAAAAHAAsAAAAGAAYAAAAIAAgAAAAGAAYAAAAIAAkAAAAGAAYAAAAIAAoAAAAGAAYAAAAIAAsAAAAGAAYAAAAJAAgAAAAGAAYAAAAJAAkAAAAGAAYAAAAJAAoAAAAGAAYAAAAJAAsAAAAGAAYAAAAKAAgAAAAGAAYAAAAKAAkAAAAGAAYAAAAKAAoAAAAGAAYAAAAKAAsAAAAGAAYAAAALAAgAAAAGAAYAAAALAAkAAAAGAAYAAAALAAoAAAAGAAYAAAALAAsAAAAGAAYAAAAMAAgAAAAGAAYAAAAMAAkAAAAGAAYAAAAMAAoAAAAGAAYAAAAMAAsAAAAGAAYAAAANAAgAAAAGAAYAAAANAAkAAAAGAAYAAAANAAoAAAAGAAYAAAANAAsAAAAGAAYAAAAOAAgAAAAGAAYAAAAOAAkAAAAGAAYAAAAOAAoAAAAGAAYAAAAOAAsAAAAGAAYAAAAPAAgAAAAGAAYAAAAPAAkAAAAGAAYAAAAPAAoAAAAGAAYAAAAPAAsAAAAGAAYAAAAQAAgAAAAGAAYAAAAQAAkAAAAGAAYAAAAQAAoAAAAGAAYAAAAQAAsAAAAGAAYAAAARAAgAAAAGAAYAAAARAAkAAAAGAAYAAAARAAoAAAAGAAYAAAARAAsAAAAGAAYAAAASAAgAAAAGAAYAAAASAAkAAAAGAAYAAAASAAoAAAAGAAYAAAASAAsAAAAGAAYAAAATAAgAAAAGAAYAAAATAAkAAAAGAAYAAAATAAoAAAAGAAYAAAATAAsAAAAGAAYAAAAUAAgAAAAGAAYAAAAUAAkAAAAGAAYAAAAUAAoAAAAGAAYAAAAUAAsAAAAGAAYAAAAVAAgAAAAGAAYAAAAVAAkAAAAGAAYAAAAVAAoAAAAGAAYAAAAVAAsAAAAGAAYAAAAWAAgAAAAFAAcAAAAWAAkAAAAGAAYAAAAWAAoAAAAGAAYAAAAWAAsAAAAGAAYAAAAXAAgAAAAFAAcAAAAXAAkAAAAGAAYAAAAXAAoAAAAGAAYAAAAXAAsAAAAGAAYAAAAYAAgAAAAFAAcAAAAYAAkAAAAGAAYAAAAYAAoAAAAGAAYAAAAYAAsAAAAGAAYAAAA=")
-tile_set = SubResource("TileSet_80nbo")
+tile_map_data = PackedByteArray("AAD//wQAAAAGAA8AAAD+/wQAAAAGAA8AAAD9/wQAAAAGAA8AAAD9/wUAAAAGAA8AAAD+/wUAAAAGAA8AAAD//wUAAAAGAA8AAAAAAAUAAAAGAA8AAAAAAAQAAAAGAA8AAAABAAYAAAAGAA8AAAACAAYAAAAGAA8AAAADAAYAAAAGAA8AAAAEAAYAAAAGAA8AAAAFAAYAAAAGAA8AAAAGAAYAAAAGAA8AAAAHAAYAAAAGAA8AAAAIAAYAAAAGAA8AAAAJAAYAAAAGAA8AAAAKAAYAAAAGAA8AAAALAAcAAAAGAA8AAAAMAAcAAAAGAA8AAAANAAcAAAAGAA8AAAAOAAcAAAAGAA8AAAAPAAcAAAAGAA8AAAAQAAcAAAAGAA8AAAAQAAgAAAAGAA8AAAARAAgAAAAGAA8AAAASAAgAAAAGAA8AAAASAAcAAAAGAA8AAAARAAcAAAAGAA8AAAAKAAcAAAAGAA8AAAALAAYAAAAGAA8AAAAMAAYAAAAGAA8AAAANAAYAAAAGAA8AAAAOAAYAAAAGAA8AAAAPAAYAAAAGAA8AAAAQAAYAAAAGAA8AAAARAAYAAAAGAA8AAAASAAYAAAAGAA8AAAAPAAgAAAAGAA8AAAAOAAgAAAAGAA8AAAANAAgAAAAGAA8AAAAMAAgAAAAGAA8AAAALAAgAAAAGAA8AAAAKAAgAAAAGAA8AAAAJAAgAAAAGAA8AAAAJAAcAAAAGAA8AAAAIAAcAAAAGAA8AAAAGAAcAAAAGAA8AAAAFAAcAAAAGAA8AAAAEAAcAAAAGAA8AAAADAAcAAAAGAA8AAAACAAcAAAAGAA8AAAAAAAYAAAAGAA8AAAD//wYAAAAGAA8AAAABAAcAAAAGAA8AAAAFAAgAAAAGAA8AAAAGAAgAAAAGAA8AAAAHAAgAAAAGAA8AAAAIAAgAAAAGAA8AAAAHAAcAAAAGAA8AAAAEAAgAAAAGAA8AAAADAAgAAAAGAA8AAAACAAgAAAAGAA8AAAAAAAcAAAAGAA8AAAD//wcAAAAGAA8AAAAAAAgAAAAGAA8AAAABAAgAAAAGAA8AAAD+/wcAAAAGAA8AAAD+/wYAAAAGAA8AAAD9/wYAAAAGAA8AAAD9/wcAAAAGAA8AAAD+/wgAAAAGAA8AAAD//wgAAAAGAA8AAAD9/wgAAAAGAA8AAAASAAUAAAAGAA8AAAASAAQAAAAGAA8AAAATAAQAAAAGAA8AAAATAAUAAAAGAA8AAAATAAYAAAAGAA8AAAATAAcAAAAGAA8AAAATAAgAAAAGAA8AAAARAAUAAAAGAA8AAAARAAQAAAAGAA8AAAAOAAUAAAAKAAsAAAAMAAUAAAAIAAsAAAANAAUAAAAJAAsAAAAFAAUAAAALAAsAAAAGAAUAAAAMAAsAAAAHAAUAAAANAAsAAAAPAAQAAAADAAsAAAAQAAQAAAAEAAsAAAADAAQAAAAFAAsAAAAEAAQAAAAGAAsAAAACAAQAAAAGAA4AAAABAAQAAAAGAA4AAAABAAUAAAAGAA4AAAACAAUAAAAGAA4AAAADAAUAAAAGAA4AAAAEAAUAAAAGAA4AAAAPAAUAAAAGAA4AAAAQAAUAAAAGAA4AAAA=")
+tile_set = ExtResource("4_rfktq")
 
 [node name="Goal" parent="." instance=ExtResource("6_62b6n")]
-position = Vector2(317, 101)
+position = Vector2(162, 66)
 
 [node name="Finger" parent="." instance=ExtResource("7_0urlm")]
-position = Vector2(-94, 106)
+position = Vector2(-23, 54)
 
 [node name="Bounds" type="Node2D" parent="."]
 
 [node name="MaxX" type="Node2D" parent="Bounds"]
-position = Vector2(647, 0)
+position = Vector2(415, 0)
 
 [node name="MinX" type="Node2D" parent="Bounds"]
-position = Vector2(-146, 0)
+position = Vector2(-210, 0)
 
 [node name="MaxY" type="Node2D" parent="Bounds"]
-position = Vector2(0, 223)
+position = Vector2(0, 139)
 
 [node name="MinY" type="Node2D" parent="Bounds"]
-position = Vector2(0, 2)
+position = Vector2(0, -163)

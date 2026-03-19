@@ -1,14 +1,16 @@
 class_name Finger
 extends Node2D
 
-const SPEED : float = 10
-const CLOSE_IN_SPEED : float = 2.5
+@export var SPEED : float = 120
+@export var FAR_SPEED : float = 1000
+@export var CLOSE_IN_SPEED : float = 50
 @export var max_flick_strength : float = 500
 var flick_strength : float = 0
 @export var max_hold_time : float = 0.5
 @export var draw_near_time : float = 0.2
 const still_offset : float = 22
 var hold_elapsed_time : float = 0
+const speedup_threshold : float = 50
 var draw_near_elapsed_time : float = 0
 const closeness_threshold : float = 4
 const farness_threshold : float = 32
@@ -17,9 +19,15 @@ var state : STATE = STATE.NONE
 var dir_to_ball : int = 1
 var mouse_pos_prev_frame : Vector2
 var move_threshold : float = 2
+var target : Vector2
+var current_speed : float = 0
+@export var SPEEDUP = 120
 const move_to_ball_threshold : float = 48
 @onready var sprite = $Sprite2D
 @onready var progress_bar : ProgressBar = $ProgressBar
+
+signal started_holding
+signal stopped_holding
 
 func change_state(new_state : STATE):
 	state = new_state
@@ -27,10 +35,10 @@ func change_state(new_state : STATE):
 		STATE.NONE:
 			pass
 		STATE.HOLD:
-			pass
+			started_holding.emit()
 		STATE.RELEASED:
+			stopped_holding.emit()
 			sprite.frame = 1
-			GameManager.cam.follow_node = GameManager.ball
 			GameManager.ball.velocity.x += flick_strength * dir_to_ball
 
 
@@ -55,7 +63,7 @@ func update_state(delta):
 			
 func _ready():
 	GameManager.finger = self
-	GameManager.cam.follow_node = self
+	set_process(false)
 
 func _process(delta: float) -> void:
 	dir_to_ball = sign(GameManager.ball.global_position.x - global_position.x) 
@@ -64,16 +72,25 @@ func _process(delta: float) -> void:
 	
 
 func move(delta):
-	var target = get_global_mouse_position()
+	var screen_mous_pos = get_viewport().get_mouse_position()
+	var mouse_delta = screen_mous_pos.distance_to(mouse_pos_prev_frame)
+	var moved_passed_threshold : bool = mouse_delta < move_threshold
+	target = get_global_mouse_position() if moved_passed_threshold else target
 	var distance_to_ball = GameManager.ball.global_position.distance_to(global_position)
 	var should_draw_near = draw_near_elapsed_time >= draw_near_time
-	draw_near_elapsed_time = draw_near_elapsed_time + delta if target.distance_to(mouse_pos_prev_frame) < move_threshold and distance_to_ball <= move_to_ball_threshold else 0
-	
+	draw_near_elapsed_time = draw_near_elapsed_time + delta if moved_passed_threshold and distance_to_ball <= move_to_ball_threshold else 0
+	var mouse_distance = target.distance_to(global_position)
 	if should_draw_near:
 		var ball_target_pos = GameManager.ball.global_position + Vector2.RIGHT * dir_to_ball * -still_offset
-		global_position += (ball_target_pos - global_position) * delta * CLOSE_IN_SPEED
+		current_speed = CLOSE_IN_SPEED
+		global_position = global_position.move_toward(ball_target_pos, delta * CLOSE_IN_SPEED)
 	else:
-		global_position += (target - global_position) * delta * SPEED
+		var should_speed_up : bool = mouse_distance > speedup_threshold and moved_passed_threshold
+		if !should_speed_up:
+			current_speed = SPEED
+		else:
+			current_speed = move_toward(SPEED, FAR_SPEED, delta * SPEEDUP)
+		global_position = global_position.move_toward(target, delta * current_speed)
 		
-	mouse_pos_prev_frame = target
+	mouse_pos_prev_frame = screen_mous_pos
 	
