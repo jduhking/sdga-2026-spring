@@ -8,6 +8,7 @@ extends Node2D
 var flick_strength : float = 0
 @export var max_hold_time : float = 0.5
 @export var draw_near_time : float = 0.2
+
 const still_offset : float = 22
 var hold_elapsed_time : float = 0
 const speedup_threshold : float = 50
@@ -26,8 +27,18 @@ const move_to_ball_threshold : float = 48
 @onready var sprite = $Sprite2D
 @onready var progress_bar : ProgressBar = $ProgressBar
 
+var chilling : bool = false
+
 signal started_holding
 signal stopped_holding
+
+func _input(event):
+	if state != STATE.NONE:
+		return
+	if event is InputEventMouseButton:
+		chilling = event.pressed and event.button_index == MOUSE_BUTTON_LEFT
+		
+
 
 func change_state(new_state : STATE):
 	state = new_state
@@ -50,6 +61,10 @@ func update_state(delta):
 				var dist_ball = global_position.distance_to(GameManager.ball.global_position)
 				if GameManager.ball and dist_ball <= farness_threshold and dist_ball >= closeness_threshold:
 					change_state(STATE.HOLD)
+				else:
+					check_chilling()
+			elif chilling:
+				check_chilling()
 		STATE.HOLD:
 			hold_elapsed_time += delta
 			var perc = clampf(hold_elapsed_time / max_hold_time, 0,1)
@@ -94,3 +109,22 @@ func move(delta):
 		
 	mouse_pos_prev_frame = screen_mous_pos
 	
+func check_chilling():
+	var coord = GameManager.ground_tiles.local_to_map(GameManager.ground_tiles.to_local(get_global_mouse_position()))
+	var ground_tile_id = GameManager.ground_tiles.get_cell_source_id(coord)
+	var frozen_tile_id = GameManager.frozen_tiles.get_cell_source_id(coord)
+	#if frozen_tile_id != -1:
+		#GameManager.frozen_tiles.erase_cell(coord)
+	if ground_tile_id != -1:
+		var ground_tile_data : TileData = GameManager.ground_tiles.get_cell_tile_data(coord)
+		var ground_tile_label : String = ground_tile_data.get_custom_data("label")
+		var frozen_tile_label = ground_tile_label + "_ice"
+		var tile_set_source : TileSetAtlasSource = GameManager.frozen_tiles.tile_set.get_source(ground_tile_id) as TileSetAtlasSource
+
+		for i in tile_set_source.get_tiles_count():
+			var atlas_coord = tile_set_source.get_tile_id(i)
+			var tile_data : TileData = tile_set_source.get_tile_data(atlas_coord, 0)
+			var label = tile_data.get_custom_data("label")
+			if label == frozen_tile_label:
+				GameManager.frozen_tiles.set_cell(coord, ground_tile_id, atlas_coord, 0)
+				break		

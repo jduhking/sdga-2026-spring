@@ -1,11 +1,13 @@
 extends Node
 
-var tilemap : TileMapLayer
+var ground_tiles : TileMapLayer
+var frozen_tiles : TileMapLayer
 var cam : MainCamera
 var ball : Ball
 var goal : Goal
 var finger : Finger
 var current_level : Level
+var skip_pan : bool
 @export var DEBUG_ON : bool = false
 
 
@@ -26,8 +28,10 @@ func change_state(new_state : GAMESTATE):
 		GAMESTATE.NONE:
 			pass
 		GAMESTATE.GAME:
+			skip_pan = false
 			goal.progress_complete.connect(_on_level_complete)
 		GAMESTATE.GAMEOVER:
+			skip_pan = true
 			restart_level()
 
 func _process(delta: float) -> void:

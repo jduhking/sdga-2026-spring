@@ -15,37 +15,48 @@ var picked: bool = false
 var last_floor_normal : Vector2 = Vector2.RIGHT
 var last_slope_parallel : Vector2 = Vector2.ZERO
 
+@onready var area2d : Area2D = $Area2D
+
 func _ready() -> void:
 	GameManager.ball = self
 	# Crucial for slope movement: keeps the ball from "bouncing" off slopes
 
 
 func _physics_process(delta: float) -> void:
-	if picked:
-		_handle_picked_state()
-	else:
-		_handle_physics_state(delta)
-
-func _handle_picked_state() -> void:
-	if Input.is_action_just_pressed("right_click"):
-		picked = false
-	else:
-		var target = get_global_mouse_position()
-		velocity = (target - global_position) * 10
-		move_and_slide()
-		rotational_speed = 0.0
+	#if picked:
+		#_handle_picked_state()
+	#else:
+	_handle_physics_state(delta)
+#
+#func _handle_picked_state() -> void:
+	#if Input.is_action_just_pressed("right_click"):
+		#picked = false
+	#else:
+		#var target = get_global_mouse_position()
+		#velocity = (target - global_position) * 10
+		#move_and_slide()
+		#rotational_speed = 0.0
 		
 func _handle_physics_state(delta: float) -> void:
-	if Input.is_action_just_pressed("right_click") and get_global_mouse_position().distance_to(global_position) <= grab_threshold:
-		picked = true
-		return
+	#if Input.is_action_just_pressed("right_click") and get_global_mouse_position().distance_to(global_position) <= grab_threshold:
+		#picked = true
+		#return
+		
+	var frozen_bodies = area2d.get_overlapping_bodies()
+	var on_surface = is_on_floor() or is_on_wall()
 
-	if not is_on_floor():
+	if not on_surface:
 		velocity.y += gravity * delta
+		
 
-	if is_on_floor():
-		var floor_normal = get_floor_normal()
-		var slope_parallel = floor_normal.rotated(PI/2)
+	if on_surface:
+		var surface_normal : Vector2
+		if is_on_floor():
+			surface_normal = get_floor_normal()
+		else:
+			surface_normal = get_wall_normal()
+			
+		var slope_parallel = surface_normal.rotated(PI/2)
 
 		# Log every surface we're on
 		#print("SURFACE | normal: ", floor_normal.snapped(Vector2(0.01, 0.01)), 
@@ -64,7 +75,7 @@ func _handle_physics_state(delta: float) -> void:
 				#" | dir: ", dir,
 				#" | speed: ", current_speed)
 
-		last_floor_normal = floor_normal
+		last_floor_normal = surface_normal
 		last_slope_parallel = slope_parallel
 
 		var gravity_pull = Vector2.DOWN.dot(slope_parallel) * gravity
@@ -74,7 +85,10 @@ func _handle_physics_state(delta: float) -> void:
 		rotational_speed = ground_speed / RADIUS
 
 		var speed_along_slope = velocity.dot(slope_parallel)
-		var friction_delta = friction * delta
+		print("collision bodies: ", frozen_bodies)
+		var friction_delta = friction * delta if frozen_bodies.size() > 0 else 0 
+		if frozen_bodies.size() > 0:
+			print("FRICTION WAS ZERO because : ", area2d.get_overlapping_bodies())
 		var new_speed = move_toward(speed_along_slope, 0.0, friction_delta)
 		velocity = velocity - slope_parallel * (speed_along_slope - new_speed)
 
